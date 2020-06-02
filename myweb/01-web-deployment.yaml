@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myweb 
+  labels:
+    app: myweb
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myweb
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: myweb
+    spec:
+      containers:
+      # Substitue your AWS Account ID for the ECR Reference
+      - image: <YOUR ACCOUNT NUMBER>.dkr.ecr.us-east-2.amazonaws.com/myweb:0.0.1
+        imagePullPolicy: Always
+        name: myweb
+
